@@ -1,5 +1,6 @@
 package com.atguigu.gulimall.wms.config;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -7,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @author Administrator
  * @create 2019-08-01 23:23
  */
+@Configuration
 public class WmsSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override

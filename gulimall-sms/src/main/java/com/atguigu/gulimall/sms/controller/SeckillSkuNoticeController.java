@@ -24,7 +24,7 @@ import com.atguigu.gulimall.sms.service.SeckillSkuNoticeService;
  *
  * @author changchen
  * @email doublechang123@163.com
- * @date 2019-08-01 21:22:26
+ * @date 2019-08-02 00:03:39
  */
 @Api(tags = "秒杀商品通知订阅 管理")
 @RestController
