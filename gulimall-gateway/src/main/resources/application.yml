@@ -1,3 +1,7 @@
+server:
+  port: 88
+
+#示例代码测试用
 #spring:
 #  cloud:
 #    gateway:
@@ -10,19 +14,31 @@
 #        - id: hello_route
 #          uri: lb://gulimall-oms
 #          predicates:
-#            -Path=/getWorld
-server:
-  port: 88
 spring:
   cloud:
     gateway:
       routes:
-        - id: world_route
+        - id: pms_route
           uri: lb://gulimall-pms
           predicates:
-            - Path=/hello
+            - Path=/pms/**
 
-        - id: hello_route
+        - id: oms_route
           uri: lb://gulimall-oms
           predicates:
-            - Path=/getWorld
+            - Path=/oms/**
+
+        - id: sms_route
+          uri: lb://gulimall-sms
+          predicates:
+            - Path=/sms/**
+
+        - id: ums_route
+          uri: lb://gulimall-ums
+          predicates:
+            - Path=/ums/**
+
+        - id: wms_route
+          uri: lb://gulimall-wms
+          predicates:
+            - Path=/wms/**
