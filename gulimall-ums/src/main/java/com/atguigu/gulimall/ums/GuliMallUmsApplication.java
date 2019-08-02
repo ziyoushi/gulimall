@@ -12,7 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-@MapperScan("com.atguigu.gulimall.ums.dao")
+@MapperScan(basePackages = "com.atguigu.gulimall.ums.dao")
 public class GuliMallUmsApplication {
     public static void main(String[] args) {
         SpringApplication.run(GuliMallUmsApplication.class,args);

@@ -11,7 +11,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @SpringBootApplication
 @EnableSwagger2
-@MapperScan("com.atguigu.gulimall.sms.dao")
+@MapperScan(basePackages = "com.atguigu.gulimall.sms.dao")
 public class GuliMallSmsApplication {
     public static void main(String[] args) {
         SpringApplication.run(GuliMallSmsApplication.class,args);
