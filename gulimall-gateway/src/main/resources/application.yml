@@ -1,0 +1,28 @@
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: world_route
+#          uri: lb://gulimall-pms
+#          predicates:
+#            - Path=/hello
+#
+#        - id: hello_route
+#          uri: lb://gulimall-oms
+#          predicates:
+#            -Path=/getWorld
+server:
+  port: 88
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: world_route
+          uri: lb://gulimall-pms
+          predicates:
+            - Path=/hello
+
+        - id: hello_route
+          uri: lb://gulimall-oms
+          predicates:
+            - Path=/getWorld
