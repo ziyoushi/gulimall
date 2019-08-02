@@ -8,25 +8,27 @@
 
 package com.atguigu.modules.job.service.impl;
 
-import com.atguigu.modules.job.entity.ScheduleJobEntity;
-import com.atguigu.modules.job.service.ScheduleJobService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.atguigu.common.utils.Constant;
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.Query;
 import com.atguigu.modules.job.dao.ScheduleJobDao;
+import com.atguigu.modules.job.entity.ScheduleJobEntity;
+import com.atguigu.modules.job.service.ScheduleJobService;
 import com.atguigu.modules.job.utils.ScheduleUtils;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang.StringUtils;
-import org.quartz.CronTrigger;
 import org.quartz.Scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service("scheduleJobService")
 public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, ScheduleJobEntity> implements ScheduleJobService {
@@ -38,16 +40,16 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, Schedule
 	 */
 	@PostConstruct
 	public void init(){
-		List<ScheduleJobEntity> scheduleJobList = this.list();
-		for(ScheduleJobEntity scheduleJob : scheduleJobList){
-			CronTrigger cronTrigger = ScheduleUtils.getCronTrigger(scheduler, scheduleJob.getJobId());
-            //如果不存在，则创建
-            if(cronTrigger == null) {
-                ScheduleUtils.createScheduleJob(scheduler, scheduleJob);
-            }else {
-                ScheduleUtils.updateScheduleJob(scheduler, scheduleJob);
-            }
-		}
+//		List<ScheduleJobEntity> scheduleJobList = this.list();
+//		for(ScheduleJobEntity scheduleJob : scheduleJobList){
+//			CronTrigger cronTrigger = ScheduleUtils.getCronTrigger(scheduler, scheduleJob.getJobId());
+//            //如果不存在，则创建
+//            if(cronTrigger == null) {
+//                ScheduleUtils.createScheduleJob(scheduler, scheduleJob);
+//            }else {
+//                ScheduleUtils.updateScheduleJob(scheduler, scheduleJob);
+//            }
+//		}
 	}
 
 	@Override

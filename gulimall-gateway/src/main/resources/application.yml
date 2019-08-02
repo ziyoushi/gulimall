@@ -42,3 +42,4 @@ spring:
           uri: lb://gulimall-wms
           predicates:
             - Path=/wms/**
+
