@@ -1,20 +1,17 @@
 package com.atguigu.gulimall.pms.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-
 import com.atguigu.gulimall.commons.bean.PageVo;
 import com.atguigu.gulimall.commons.bean.QueryCondition;
 import com.atguigu.gulimall.commons.bean.Resp;
+import com.atguigu.gulimall.pms.entity.AttrGroupEntity;
+import com.atguigu.gulimall.pms.service.AttrGroupService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import com.atguigu.gulimall.pms.entity.AttrGroupEntity;
-import com.atguigu.gulimall.pms.service.AttrGroupService;
+import java.util.Arrays;
 
 
 
@@ -28,10 +25,19 @@ import com.atguigu.gulimall.pms.service.AttrGroupService;
  */
 @Api(tags = "属性分组 管理")
 @RestController
-@RequestMapping("pms/attrgroup")
+@RequestMapping("/pms/attrgroup")
 public class AttrGroupController {
     @Autowired
     private AttrGroupService attrGroupService;
+
+    //查询某个分组下对应的所有属性
+    @GetMapping("/list/category/{catId}")
+    public Resp<PageVo> attrGroup(QueryCondition queryCondition,@PathVariable("catId") Long catId){
+
+        PageVo pageVo = attrGroupService.queryPageGroupByGroupId(queryCondition,catId);
+
+        return Resp.ok(pageVo);
+    }
 
     /**
      * 列表

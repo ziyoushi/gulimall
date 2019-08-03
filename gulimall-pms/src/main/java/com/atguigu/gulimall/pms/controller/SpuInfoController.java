@@ -1,20 +1,17 @@
 package com.atguigu.gulimall.pms.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-
 import com.atguigu.gulimall.commons.bean.PageVo;
 import com.atguigu.gulimall.commons.bean.QueryCondition;
 import com.atguigu.gulimall.commons.bean.Resp;
+import com.atguigu.gulimall.pms.entity.SpuInfoEntity;
+import com.atguigu.gulimall.pms.service.SpuInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import com.atguigu.gulimall.pms.entity.SpuInfoEntity;
-import com.atguigu.gulimall.pms.service.SpuInfoService;
+import java.util.Arrays;
 
 
 
@@ -32,6 +29,18 @@ import com.atguigu.gulimall.pms.service.SpuInfoService;
 public class SpuInfoController {
     @Autowired
     private SpuInfoService spuInfoService;
+
+
+    ///simple/search
+    @ApiOperation("按照spuid,spuname,分类id检索商品")
+    @GetMapping("/simple/search")
+    public Resp<PageVo> search(QueryCondition queryCondition,
+                               @RequestParam(value = "catId",defaultValue = "0") Long catId){
+
+        PageVo pageVo = spuInfoService.queryPageByCatId(queryCondition,catId);
+
+        return Resp.ok(pageVo);
+    }
 
     /**
      * 列表
