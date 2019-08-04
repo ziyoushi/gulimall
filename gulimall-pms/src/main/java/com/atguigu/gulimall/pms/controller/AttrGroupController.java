@@ -46,6 +46,7 @@ public class AttrGroupController {
 
 
     //查询某个分组以及分组下面的所有属性信息
+    @ApiOperation("查询某个分组以及分组下面的所有属性信息")
     @GetMapping("/info/withattrs/{attrGroupId}")
     public Resp<AttrGroupWithAttrsVo> attrGroupAttrs(QueryCondition queryCondition,@PathVariable("attrGroupId") Long attrGroupId){
 
@@ -78,6 +79,7 @@ public class AttrGroupController {
 
 
     //查询某个分组下对应的所有属性
+    @ApiOperation("查询某个分组下对应的所有属性")
     @GetMapping("/list/category/{catId}")
     public Resp<PageVo> attrGroup(QueryCondition queryCondition,@PathVariable("catId") Long catId){
 
