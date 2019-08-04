@@ -4,9 +4,14 @@ import com.atguigu.gulimall.commons.bean.PageVo;
 import com.atguigu.gulimall.commons.bean.QueryCondition;
 import com.atguigu.gulimall.commons.bean.Resp;
 import com.atguigu.gulimall.pms.entity.AttrEntity;
+import com.atguigu.gulimall.pms.entity.AttrGroupEntity;
+import com.atguigu.gulimall.pms.service.AttrGroupService;
 import com.atguigu.gulimall.pms.service.AttrService;
+import com.atguigu.gulimall.pms.vo.AttrSaveVo;
+import com.atguigu.gulimall.pms.vo.AttrWithGroupVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +35,9 @@ public class AttrController {
     @Autowired
     private AttrService attrService;
 
-    ///pms/attr/base/{catId}
+    @Autowired
+    private AttrGroupService attrGroupService;
+
 
     /**
      * 查询基本属性
@@ -77,10 +84,17 @@ public class AttrController {
     @ApiOperation("详情查询")
     @GetMapping("/info/{attrId}")
     @PreAuthorize("hasAuthority('pms:attr:info')")
-    public Resp<AttrEntity> info(@PathVariable("attrId") Long attrId){
+    public Resp<AttrWithGroupVo> info(@PathVariable("attrId") Long attrId){
 		AttrEntity attr = attrService.getById(attrId);
 
-        return Resp.ok(attr);
+        AttrWithGroupVo attrWithGroupVo = new AttrWithGroupVo();
+        BeanUtils.copyProperties(attr,attrWithGroupVo);
+
+        //根据属性id查询属性分组
+        AttrGroupEntity attrGroupEntity = attrGroupService.getGroupInfoByAttrId(attrId);
+        attrWithGroupVo.setGroup(attrGroupEntity);
+
+        return Resp.ok(attrWithGroupVo);
     }
 
     /**
@@ -89,9 +103,8 @@ public class AttrController {
     @ApiOperation("保存")
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('pms:attr:save')")
-    public Resp<Object> save(@RequestBody AttrEntity attr){
-		attrService.save(attr);
-
+    public Resp<Object> save(@RequestBody AttrSaveVo attr){
+		attrService.saveAttrAndRelation(attr);
         return Resp.ok(null);
     }
 
