@@ -1,22 +1,19 @@
 package com.atguigu.gulimall.wms.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-
 import com.atguigu.gulimall.commons.bean.PageVo;
 import com.atguigu.gulimall.commons.bean.QueryCondition;
 import com.atguigu.gulimall.commons.bean.Resp;
+import com.atguigu.gulimall.wms.entity.WareSkuEntity;
+import com.atguigu.gulimall.wms.service.WareSkuService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import com.atguigu.gulimall.wms.entity.WareSkuEntity;
-import com.atguigu.gulimall.wms.service.WareSkuService;
-
-
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -28,10 +25,21 @@ import com.atguigu.gulimall.wms.service.WareSkuService;
  */
 @Api(tags = "商品库存 管理")
 @RestController
-@RequestMapping("wms/waresku")
+@RequestMapping("/wms/waresku")
 public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
+
+    ///sku/{skuId}
+    //获取某个sku的库存信息
+    @ApiOperation("获取某个sku的库存信息")
+    @GetMapping("/sku/{skuId}")
+    public Resp<List<WareSkuEntity>> skuWareInfos(@PathVariable("skuId") Long skuId){
+
+        List<WareSkuEntity> wareSkuEntityList = wareSkuService.list(new QueryWrapper<WareSkuEntity>().eq("sku_id", skuId));
+
+        return Resp.ok(wareSkuEntityList);
+    }
 
     /**
      * 列表
