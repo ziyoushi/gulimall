@@ -1,22 +1,20 @@
 package com.atguigu.gulimall.sms.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-
 import com.atguigu.gulimall.commons.bean.PageVo;
 import com.atguigu.gulimall.commons.bean.QueryCondition;
 import com.atguigu.gulimall.commons.bean.Resp;
+import com.atguigu.gulimall.commons.to.SkuSaleInfoTo;
+import com.atguigu.gulimall.sms.entity.SkuBoundsEntity;
+import com.atguigu.gulimall.sms.service.SkuBoundsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import com.atguigu.gulimall.sms.entity.SkuBoundsEntity;
-import com.atguigu.gulimall.sms.service.SkuBoundsService;
-
-
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -28,10 +26,22 @@ import com.atguigu.gulimall.sms.service.SkuBoundsService;
  */
 @Api(tags = "商品sku积分设置 管理")
 @RestController
-@RequestMapping("sms/skubounds")
+@RequestMapping("/sms/skubounds")
+@Slf4j
 public class SkuBoundsController {
     @Autowired
     private SkuBoundsService skuBoundsService;
+
+    @ApiOperation("保存")
+    @PostMapping("/saleinfo/save")
+    //@PreAuthorize("hasAuthority('sms:skubounds:save')")
+    public Resp<Object> saveSkuSaleBounds(@RequestBody List<SkuSaleInfoTo> to){
+
+        log.debug("开始调用sms系统,{}",to);
+        //skuBoundsService.saveSkuAllSaleInfo(to);
+
+        return Resp.ok(null);
+    }
 
     /**
      * 列表

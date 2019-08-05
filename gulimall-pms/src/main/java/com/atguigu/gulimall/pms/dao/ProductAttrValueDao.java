@@ -3,6 +3,9 @@ package com.atguigu.gulimall.pms.dao;
 import com.atguigu.gulimall.pms.entity.ProductAttrValueEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * spu属性值
@@ -13,5 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ProductAttrValueDao extends BaseMapper<ProductAttrValueEntity> {
-	
+
+    //保存spu基本属性
+    void saveSpuAttrs(@Param("attrs") List<ProductAttrValueEntity> spuAttrList);
 }

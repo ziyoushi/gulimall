@@ -13,5 +13,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface SpuInfoDescDao extends BaseMapper<SpuInfoDescEntity> {
-	
+
+    //保存spu图片信息
+    void saveSpuInfoDesc(SpuInfoDescEntity spuInfoDescEntity);
 }
