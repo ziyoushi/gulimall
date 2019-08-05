@@ -15,7 +15,7 @@ public class SkuSaleInfoTo {
     private BigDecimal growBounds;
     private Integer[] work;
 
-    private BigDecimal fullCount;
+    private Integer fullCount;
     private BigDecimal discount;
     private Integer ladderAddOther;
 

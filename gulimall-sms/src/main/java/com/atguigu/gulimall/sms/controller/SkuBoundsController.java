@@ -38,7 +38,7 @@ public class SkuBoundsController {
     public Resp<Object> saveSkuSaleBounds(@RequestBody List<SkuSaleInfoTo> to){
 
         log.debug("开始调用sms系统,{}",to);
-        //skuBoundsService.saveSkuAllSaleInfo(to);
+        skuBoundsService.saveSkuAllSaleInfo(to);
 
         return Resp.ok(null);
     }
