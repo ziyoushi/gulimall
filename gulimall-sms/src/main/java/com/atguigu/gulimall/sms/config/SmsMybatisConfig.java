@@ -1,4 +1,4 @@
-package com.atguigu.gulimall.pms.config;
+package com.atguigu.gulimall.sms.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.zaxxer.hikari.HikariDataSource;
@@ -13,10 +13,11 @@ import javax.sql.DataSource;
 
 /**
  * @author Administrator
- * @create 2019-08-02 19:40
+ * @create 2019-08-07 20:40
  */
 @Configuration
-public class PmsMybatisConfig {
+public class SmsMybatisConfig {
+
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
