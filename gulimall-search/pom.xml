@@ -38,6 +38,7 @@
             <groupId>com.atguigu</groupId>
             <artifactId>gulimall-core</artifactId>
             <exclusions>
+                <!-- es系统不需要操作数据库 所以将相关依赖排除 -->
                 <exclusion>
                     <groupId>com.baomidou</groupId>
                     <artifactId>mybatis-plus-boot-starter</artifactId>
