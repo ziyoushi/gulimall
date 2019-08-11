@@ -36,4 +36,7 @@ public interface SpuInfoService extends IService<SpuInfoEntity> {
 
     //保存sku基本信息
     void saveSkuInfo(Long spuId, List<SkusVo> skus);
+
+    //商品上架/下架
+    void updateSpuStatus(Long spuId, Integer status);
 }

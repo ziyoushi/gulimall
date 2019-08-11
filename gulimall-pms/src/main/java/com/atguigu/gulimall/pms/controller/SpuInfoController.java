@@ -32,6 +32,18 @@ public class SpuInfoController {
     private SpuInfoService spuInfoService;
 
 
+    //上架 下架
+    @ApiOperation("商品上架/下架")
+    @GetMapping("/updateStatus/{spuId}")
+    public Resp<Object> updateSpuStatus(@PathVariable("spuId") Long spuId,
+                                        @RequestParam("status") Integer status){
+
+        spuInfoService.updateSpuStatus(spuId,status);
+
+        return Resp.ok(null);
+    }
+
+
     ///simple/search
     @ApiOperation("按照spuid,spuname,分类id检索商品")
     @GetMapping("/simple/search")
@@ -54,7 +66,6 @@ public class SpuInfoController {
 
         return Resp.ok(page);
     }
-
 
     /**
      * 信息
