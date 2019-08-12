@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
-
-
-
 /**
  * spu信息
  *
@@ -30,7 +27,6 @@ import java.util.Arrays;
 public class SpuInfoController {
     @Autowired
     private SpuInfoService spuInfoService;
-
 
     //上架 下架
     @ApiOperation("商品上架/下架")

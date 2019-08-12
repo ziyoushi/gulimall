@@ -337,7 +337,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             //说明远程到es成功 将spu的状态修改
             SpuInfoEntity entity = new SpuInfoEntity();
             entity.setId(spuId);
-            entity.setPublishStatus(1);
+            entity.setPublishStatus(status);
             entity.setUodateTime(new Date());
             spuInfoDao.updateById(entity);
         }

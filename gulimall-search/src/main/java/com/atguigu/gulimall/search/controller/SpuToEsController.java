@@ -27,6 +27,7 @@ public class SpuToEsController {
     @PostMapping("/spu/up")
     public Resp<Object> spuUp(@RequestBody List<EsSkuVo> vos){
 
+        System.out.println("远程传递过来的---》"+vos);
         vos.forEach(vo ->{
             Index index = new Index.Builder(vo)
                     .index(Constant.ES_SPU_INDEX)
