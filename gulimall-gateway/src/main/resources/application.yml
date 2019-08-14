@@ -21,7 +21,7 @@ spring:
         - id: pms_route
           uri: lb://gulimall-pms
           predicates:
-            - Path=/pms/**,/index/**
+            - Path=/pms/**,/api/index/**
           filters:
             - RewritePath=/api/(?<segment>.*), /$\{segment}
 

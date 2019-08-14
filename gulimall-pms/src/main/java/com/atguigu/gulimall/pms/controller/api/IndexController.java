@@ -5,6 +5,7 @@ import com.atguigu.gulimall.pms.service.CategoryService;
 import com.atguigu.gulimall.pms.vo.CategoryWithChildrensVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,13 +21,16 @@ import java.util.List;
 public class IndexController {
 
     @Autowired
+    StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
     private CategoryService categoryService;
 
     @ApiOperation("查询所有的一级分类的子分类")
     @GetMapping("/cates")
     public Resp<Object> getIndexCates(){
 
-        List<CategoryWithChildrensVo> data = categoryService.selectCategoryChildrenWithChildrens(1L);
+        List<CategoryWithChildrensVo> data = categoryService.selectCategoryChildrenWithChildrens(0L);
 
         return Resp.ok(data);
     }
