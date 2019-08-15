@@ -25,7 +25,7 @@ public class GulimallSearchApplicationTests {
 
         User user = new User("zhangsan", "zhang@qq.com", 23);
 
-        Index build = new Index.Builder(user).index("user").type("info").id("1").build();
+        Index build = new Index.Builder(user).index("person").type("info").id("2").build();
 
         jestClient.execute(build);
 

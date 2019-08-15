@@ -31,6 +31,7 @@ public class SpuToEsController {
         vos.forEach(vo ->{
             Index index = new Index.Builder(vo)
                     .index(Constant.ES_SPU_INDEX)
+                    //.index("mall")
                     .type(Constant.ES_SPU_TYPE)
                     .id(vo.getId().toString())
                     .build();
