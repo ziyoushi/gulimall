@@ -3,6 +3,7 @@ package com.atguigu.gulimall.pms.controller;
 import com.atguigu.gulimall.commons.bean.PageVo;
 import com.atguigu.gulimall.commons.bean.QueryCondition;
 import com.atguigu.gulimall.commons.bean.Resp;
+import com.atguigu.gulimall.commons.to.SkuInfoVo;
 import com.atguigu.gulimall.pms.entity.SkuInfoEntity;
 import com.atguigu.gulimall.pms.service.SkuInfoService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -25,10 +26,20 @@ import java.util.List;
  */
 @Api(tags = "sku信息 管理")
 @RestController
-@RequestMapping("pms/skuinfo")
+@RequestMapping("/pms/skuinfo")
 public class SkuInfoController {
     @Autowired
     private SkuInfoService skuInfoService;
+
+    //根据skuId查询商品详情
+    @ApiOperation("根据skuId查询商品详情给购物车")
+    @GetMapping("/cart/{skuId}")
+    public Resp<SkuInfoVo> getSkuInfoForCart(@PathVariable("skuId") Long skuId){
+
+        SkuInfoVo skuInfoVo = skuInfoService.getSkuInfo(skuId);
+
+        return Resp.ok(skuInfoVo);
+    }
 
     ////获取某个spu下的所有sku信息
     ///pms/skuinfo
@@ -52,7 +63,6 @@ public class SkuInfoController {
 
         return Resp.ok(page);
     }
-
 
     /**
      * 信息

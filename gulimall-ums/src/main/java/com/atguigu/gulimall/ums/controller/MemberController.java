@@ -1,20 +1,20 @@
 package com.atguigu.gulimall.ums.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-
 import com.atguigu.gulimall.commons.bean.PageVo;
 import com.atguigu.gulimall.commons.bean.QueryCondition;
 import com.atguigu.gulimall.commons.bean.Resp;
+import com.atguigu.gulimall.commons.exception.UserRegisterException;
+import com.atguigu.gulimall.ums.entity.MemberEntity;
+import com.atguigu.gulimall.ums.service.MemberService;
+import com.atguigu.gulimall.ums.vo.MemberLoginVo;
+import com.atguigu.gulimall.ums.vo.MemberRegisterVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import com.atguigu.gulimall.ums.entity.MemberEntity;
-import com.atguigu.gulimall.ums.service.MemberService;
+import java.util.Arrays;
 
 
 
@@ -28,10 +28,32 @@ import com.atguigu.gulimall.ums.service.MemberService;
  */
 @Api(tags = "会员 管理")
 @RestController
-@RequestMapping("ums/member")
+@RequestMapping("/ums/member")
 public class MemberController {
     @Autowired
     private MemberService memberService;
+
+    //登录
+    public Resp<Object> login(MemberLoginVo vo){
+
+        memberService.login(vo);
+
+        return Resp.ok(null);
+    }
+
+    //注册
+    @PostMapping("/register")
+    public Resp<Object> register(MemberRegisterVo vo){
+
+        try {
+            memberService.registerUser(vo);
+            return Resp.ok(null);
+        }catch (UserRegisterException e){
+            return Resp.fail(e.getMessage());
+        }
+
+    }
+
 
     /**
      * 列表
