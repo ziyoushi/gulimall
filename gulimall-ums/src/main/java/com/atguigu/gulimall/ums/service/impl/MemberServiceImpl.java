@@ -4,20 +4,26 @@ import com.alibaba.fastjson.JSON;
 import com.atguigu.gulimall.commons.bean.*;
 import com.atguigu.gulimall.commons.exception.UserLoginException;
 import com.atguigu.gulimall.commons.exception.UserRegisterException;
+import com.atguigu.gulimall.commons.utils.GuliJwtUtils;
 import com.atguigu.gulimall.ums.dao.MemberDao;
 import com.atguigu.gulimall.ums.entity.MemberEntity;
 import com.atguigu.gulimall.ums.service.MemberService;
 import com.atguigu.gulimall.ums.vo.MemberLoginVo;
 import com.atguigu.gulimall.ums.vo.MemberRegisterVo;
+import com.atguigu.gulimall.ums.vo.MemberRespVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 
 @Service("memberService")
@@ -51,6 +57,8 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
         memberEntity.setUsername(vo.getUsername());
         memberEntity.setMobile(vo.getMobile());
 
+        //查询count
+
         MemberEntity m1 = memberDao.selectOne(new QueryWrapper<MemberEntity>().eq("username", vo.getUsername()));
         if (m1 != null){
             throw new UserRegisterException(UserRegisterConstant.USER_NAME_EXCEPTION);
@@ -70,7 +78,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
     }
 
     @Override
-    public void login(MemberLoginVo vo) {
+    public MemberRespVo login(MemberLoginVo vo) {
 
         //用户可以根据username phone email 来进行登录
         QueryWrapper<MemberEntity> wrapper = new QueryWrapper<MemberEntity>().eq("username", vo.getLoginacct())
@@ -91,8 +99,19 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
             //密码校验成功
             //将用户信息保存到redis
             String token = UUID.randomUUID().toString().replace("-", "");
-            redisTemplate.opsForValue().set(Constant.LOGIN_USER_PREFIX+token, JSON.toJSONString(one));
+            redisTemplate.opsForValue().set(Constant.LOGIN_USER_PREFIX+token, JSON.toJSONString(one),Constant.LOGIN_USER_TIMEOUT_MINUTES, TimeUnit.MINUTES);
 
+            Map<String,Object> map = new HashMap<>();
+            map.put("id",one.getId());
+            map.put("token",token);
+            //将这个jwt传给前端
+            String jwt = GuliJwtUtils.buildJwt(map, null);
+
+            MemberRespVo memberRespVo = new MemberRespVo();
+            BeanUtils.copyProperties(one,memberRespVo);
+            memberRespVo.setToken(jwt);
+
+            return memberRespVo;
 
         }else {
 

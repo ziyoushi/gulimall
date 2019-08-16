@@ -8,6 +8,7 @@ import com.atguigu.gulimall.ums.entity.MemberEntity;
 import com.atguigu.gulimall.ums.service.MemberService;
 import com.atguigu.gulimall.ums.vo.MemberLoginVo;
 import com.atguigu.gulimall.ums.vo.MemberRegisterVo;
+import com.atguigu.gulimall.ums.vo.MemberRespVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +35,17 @@ public class MemberController {
     private MemberService memberService;
 
     //登录
-    public Resp<Object> login(MemberLoginVo vo){
+    @ApiOperation("用户登录")
+    @GetMapping("/login")
+    public Resp<MemberRespVo> login(MemberLoginVo vo){
 
-        memberService.login(vo);
+        MemberRespVo respVo = memberService.login(vo);
 
-        return Resp.ok(null);
+        return Resp.ok(respVo);
     }
 
     //注册
+    @ApiOperation("用户注册")
     @PostMapping("/register")
     public Resp<Object> register(MemberRegisterVo vo){
 

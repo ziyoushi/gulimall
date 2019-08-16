@@ -2,6 +2,7 @@ package com.atguigu.gulimall.ums.service;
 
 import com.atguigu.gulimall.ums.vo.MemberLoginVo;
 import com.atguigu.gulimall.ums.vo.MemberRegisterVo;
+import com.atguigu.gulimall.ums.vo.MemberRespVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.atguigu.gulimall.ums.entity.MemberEntity;
 import com.atguigu.gulimall.commons.bean.PageVo;
@@ -23,6 +24,6 @@ public interface MemberService extends IService<MemberEntity> {
     void registerUser(MemberRegisterVo vo);
 
     //用户登录 todo 修改返回值
-    void login(MemberLoginVo vo);
+    MemberRespVo login(MemberLoginVo vo);
 }
 
