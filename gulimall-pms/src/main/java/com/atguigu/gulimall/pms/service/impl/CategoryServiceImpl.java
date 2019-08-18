@@ -1,6 +1,5 @@
 package com.atguigu.gulimall.pms.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.atguigu.gulimall.commons.bean.Constant;
 import com.atguigu.gulimall.commons.bean.PageVo;
 import com.atguigu.gulimall.commons.bean.Query;
@@ -17,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -68,9 +66,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     @Override
     public List<CategoryWithChildrensVo> selectCategoryChildrenWithChildrens(long id) {
 
-        List<CategoryWithChildrensVo> vos = null;
+        log.debug("目标方法执行");
+        System.out.println("service-thread线程---》"+Thread.currentThread().getId());
 
-        String s = redisTemplate.opsForValue().get(Constant.CACHE_CATELOG);
+        List<CategoryWithChildrensVo> vos = categoryDao.selectCategoryChildrenWithChildrens(id);
+
+        /*String s = redisTemplate.opsForValue().get(Constant.CACHE_CATELOG);
         if (!StringUtils.isEmpty(s)){
             log.debug("缓存命中");
             vos = JSON.parseArray(s, CategoryWithChildrensVo.class);
@@ -80,7 +81,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
             vos = categoryDao.selectCategoryChildrenWithChildrens(id);
             //在放入缓存中
             redisTemplate.opsForValue().set(Constant.CACHE_CATELOG,JSON.toJSONString(vos));
-        }
+        }*/
 
         return vos;
     }
