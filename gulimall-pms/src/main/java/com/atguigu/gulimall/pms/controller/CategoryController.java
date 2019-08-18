@@ -36,7 +36,6 @@ public class CategoryController {
 
         List<CategoryEntity> data = categoryService.getCategoryChildrenTree(catId);
 
-
         return Resp.ok(data);
     }
 

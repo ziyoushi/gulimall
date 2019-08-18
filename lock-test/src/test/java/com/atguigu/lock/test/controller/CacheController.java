@@ -41,4 +41,34 @@ public class CacheController {
         return "ok";
     }
 
+    //修改 使用双写模式
+    @GetMapping("/update")
+    public User update(String username,String email){
+        User user = new User(username,email);
+
+        CacheUtils.saveToCache(new User(username,email));
+
+        return user;
+    }
+
+    //
+    @GetMapping("/info")
+    public String info(String username){
+        //先从缓存中拿 缓存中没有再查询数据库
+        User cache = CacheUtils.getFromCache(username);
+
+        if (cache == null){
+            //模拟从数据库中查询
+            cache = new User("dbUser","dbuser@qq.com");
+        }
+
+        //模拟各个操作
+        cache.setEmail("hahahhah@qq.com");
+
+        return "ok";
+
+
+    }
+
+
 }

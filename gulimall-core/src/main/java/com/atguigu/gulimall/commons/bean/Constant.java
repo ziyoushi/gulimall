@@ -18,4 +18,7 @@ public class Constant {
     //购物车前缀
     public static final String CART_PREFIX = "cart:user:";
 
+    //设置购物车超期时间
+    public static final Long CART_TIMEOUT = 60 * 24 * 30L;
+
 }

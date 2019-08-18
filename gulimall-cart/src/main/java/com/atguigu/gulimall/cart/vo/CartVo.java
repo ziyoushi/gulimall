@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * @author Administrator
@@ -54,11 +55,34 @@ public class CartVo {
         BigDecimal reduce = new BigDecimal("0.0");
         for (CartItemVo item : items) {
 
+            if (!item.isCheck()){
+                continue;
+            }
+
             //满减 打折
             List<SkuFullReductionVo> reductionVos = item.getReductionVos();
+
+            //双端队列
+            LinkedBlockingDeque<SkuFullReductionVo> fullReductionVos = new LinkedBlockingDeque<>();
+
+            for (SkuFullReductionVo reduction : reductionVos) {
+                if(reduction.getAddOther() == 1){
+                    //代表可以叠加优惠
+                    fullReductionVos.addFirst(reduction);
+                }else {
+                    fullReductionVos.addLast(reduction);
+                }
+            }
+
             if (reductionVos != null && reductionVos.size()>0){
-                for (SkuFullReductionVo reductionVo : reductionVos) {
+
+                for (SkuFullReductionVo reductionVo : fullReductionVos) {
+
+                /*}
+
+                for (SkuFullReductionVo reductionVo : reductionVos) {*/
                     Integer type = reductionVo.getType();
+                    Integer addOther = reductionVo.getAddOther();
                     //0打折 1 满减
                     //根据type进行分析
                     if (type == 0){
@@ -66,7 +90,7 @@ public class CartVo {
                         Integer discount = reductionVo.getDiscount();
                         if (item.getNum() >= fullCount){
                             //折后价格
-                            BigDecimal reduceTotalPrice = item.getPrice().multiply(new BigDecimal("0" + discount));
+                            BigDecimal reduceTotalPrice = item.getPrice().multiply(new BigDecimal((discount/100)+"." + (discount%100)));
                             //减了多少钱
                             BigDecimal subtractPrice = item.getTotalPrice().subtract(reduceTotalPrice);
                             reduce = reduce.add(subtractPrice);
@@ -82,6 +106,10 @@ public class CartVo {
                             reduce = reduce.add(reducePrice);
                         }
 
+                    }
+
+                    if (addOther ==0){
+                        break;
                     }
 
                 }

@@ -29,6 +29,9 @@ public class CartItemVo {
     @Setter @Getter
     private Integer num;
 
+    @Setter @Getter
+    private boolean check = true;//商品是否选中 默认选中 对应status ==0 false ==1 true
+
     private BigDecimal totalPrice;
 
     @Setter @Getter

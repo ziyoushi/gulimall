@@ -5,6 +5,7 @@ import com.atguigu.gulimall.commons.bean.Constant;
 import com.atguigu.gulimall.commons.bean.PageVo;
 import com.atguigu.gulimall.commons.bean.Query;
 import com.atguigu.gulimall.commons.bean.QueryCondition;
+import com.atguigu.gulimall.pms.annotation.GuliCache;
 import com.atguigu.gulimall.pms.dao.CategoryDao;
 import com.atguigu.gulimall.pms.entity.CategoryEntity;
 import com.atguigu.gulimall.pms.service.CategoryService;
@@ -63,6 +64,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return list;
     }
 
+    @GuliCache(prefix = Constant.CACHE_CATELOG)
     @Override
     public List<CategoryWithChildrensVo> selectCategoryChildrenWithChildrens(long id) {
 

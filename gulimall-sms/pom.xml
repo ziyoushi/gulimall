@@ -23,6 +23,18 @@
 
     <dependencies>
 
+        <!-- 根据SpringBoot的版本来选择相应版本 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-seata</artifactId>
+            <version>2.0.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-all</artifactId>
+            <version>${seata.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>com.atguigu</groupId>
             <artifactId>gulimall-core</artifactId>
