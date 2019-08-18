@@ -24,6 +24,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -118,15 +119,18 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     @Override
     public void saveAllSpuBase(SpuAllSaveVo spuInfo) {
 
+        SpuInfoService proxy = (SpuInfoService) AopContext.currentProxy();
+
         //保存基本spu信息
-        Long spuId = this.saveSpuBaseInfo(spuInfo);
+        Long spuId = proxy.saveSpuBaseInfo(spuInfo);
         //根据spuId保存spu描述信息(图片信息)
-        this.saveSpuInfoDesc(spuId,spuInfo);
+        proxy.saveSpuInfoDesc(spuId,spuInfo);
+
         //保存spu基本属性
-        this.saveSpuBaseAttrs(spuId,spuInfo);
+        proxy.saveSpuBaseAttrs(spuId,spuInfo);
 
         //保存sku基本信息
-        this.saveSkuInfo(spuId,spuInfo.getSkus());
+        proxy.saveSkuInfo(spuId,spuInfo.getSkus());
 
     }
 
